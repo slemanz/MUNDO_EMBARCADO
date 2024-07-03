@@ -10,6 +10,8 @@ Este conteúdo oferece uma visão abrangente sobre o desenvolvimento de software
 
 [3. Trabalhando com o Hardware](#3-trabalhando-com-o-hardware)
 
+[4. Entradas, Saídas e Temporizadores](#4-entradas-saídas-e-temporizadores)
+
 
 ## 1. Desafios e Princípios
 
@@ -178,93 +180,84 @@ Essa abordagem modular e documentada ajuda a navegar pelos desafios do desenvolv
 Iniciar no desenvolvimento de sistemas embarcados pode ser um desafio. Engenheiros de software geralmente precisam aprender noções básicas de engenharia elétrica, e vice-versa. Colaborar estreitamente com profissionais da outra área facilita a transição. Projetos começam como ideias ou necessidades que, ao serem desenvolvidas, resultam em um design de produto baseado em funcionalidades, custo e tempo de mercado. Um cronograma define marcos e atividades principais.
 
 
-Projeto Ideal
+**Projeto Ideal**
+
 Cronogramas baseiam-se em estimativas de líderes técnicos sobre tempo e recursos necessários. No entanto, imprevistos e revisão de planos são comuns. A função dos cronogramas é identificar dependências e preparar para possíveis obstáculos.
 
-Design de Hardware
-A equipe de hardware escolhe componentes após revisar datasheets e referências, frequentemente consultando a equipe de software. Kits de desenvolvimento são adquiridos para as partes mais arriscadas. Enquanto a equipe de hardware cria esquemas, a de software trabalha em ferramentas, debuggers e sandbox para testes.
+**Design de Hardware**
 
-Uma vez completo o esquema (e verificando-se a adequação dos componentes), a placa é projetada e enviada para fabricação. Durante esse período, a equipe de software define e escreve testes de hardware, prioritando componentes mais críticos conforme indicado pelos engenheiros eletrônicos.
+A equipe de hardware escolhe componentes após revisar datasheets e referências, frequentemente consultando a equipe de software. Kits de desenvolvimento são adquiridos para as partes mais arriscadas. Enquanto a equipe de hardware cria esquemáticos, a de software trabalha em ferramentas, debuggers e sandbox para testes.
 
-Inicialização da Placa
+Uma vez completo o esquemático (e verificando-se a adequação dos componentes), a placa é projetada e enviada para fabricação. Durante esse período, a equipe de software define e escreve testes de hardware, prioritizando componentes mais críticos conforme indicado pelos engenheiros eletrônicos.
+
+**Inicialização da Placa**
+
 Receber a placa pode revelar inúmeros bugs, pois ao contrário do software, as placas não permitem muitas iterações de testes. Encontrar bugs cedo é crucial; a colaboração e a habilidade de programação são essenciais para resolver problemas. Não se envergonhe ao receber feedback, agradeça-o, pois isso evita que bugs cheguem aos clientes.
 
 Para facilitar a inicialização, cada componente deve ser testado individualmente. Testes independentes são críticos, permitindo que qualquer membro da equipe reproduza problemas e proponha soluções.
 
-Lendo um Datasheet
+**Lendo um Datasheet**
+
 Datasheets são manuais de API para periféricos, essenciais para entender os componentes. Eles não são escritos para você, mas para engenheiros elétricos experientes. Comece pelas descrições funcionais e diagramas, depois passe para seções relevantes como informações de aplicação e operação teórica. Evite seções como condições operacionais recomendadas e características elétricas inicialmente.
 
 
-Seções como pinout e descrições de pinos são úteis posteriormente para depurar problemas específicos. Características de desempenho e esquemas de amostra também são importantes quando o componente não funciona como esperado.
+Seções como pinout e descrições de pinos são úteis posteriormente para depurar problemas específicos. Características de desempenho e esquemáticos de amostra também são importantes quando o componente não funciona como esperado.
 
-Avaliando Componentes com o Datasheet
+**Avaliando Componentes com o Datasheet**
+
 Quando for escolher componentes, verifique critérios de projeto, como limites máximos e características elétricas. Se o componente não atender a seus critérios, descarte-o rapidamente.
 
-Processador: A Linguagem do Software
+**Processador: A Linguagem do Software**
+
 O processador é o componente mais importante, com diferentes fornecedores oferecendo variados periféricos. A mudança entre diversos processadores pode ser complexa, mas exemplos de código e manuais de usuário ajudam na transição.
 
-Leitura de Esquemas
-Esquemas podem parecer complexos, mas concentre-se nos maiores componentes e suas conexões. Isso ajuda a localizar periféricos importantes.
+**Leitura de Esquemáticos**
 
-Manutenção da Placa
-Manusear hardware incorretamente pode causar danos; use materiais antiestáticos e peça sempre placas sobressalentes. Uma placa reserva ajuda em testes e suporta mostra de progresso, evitando que você fique sem uma placa para continuar o desenvolvimento.
+Esquemáticos podem parecer complexos, mas concentre-se nos maiores componentes e suas conexões. Isso ajuda a localizar periféricos importantes.
 
-Ferramentas de Depuração
-Ter um conjunto de ferramentas de depuração no seu espaço de trabalho dá independência e segurança ao manejar a placa. Essas ferramentas incluem alicates de bico fino, cabos jumper e analisadores de lógica.
+**Manutenção da Placa**
 
-Testando Hardware e Software
+Manusear hardware incorretamente pode causar danos; use materiais antiestáticos e peça sempre placas sobressalentes. Uma placa reserva ajuda em testes e evita que você fique sem uma placa para continuar o desenvolvimento.
+
+**Ferramentas de Depuração**
+
+Ter um conjunto de ferramentas de depuração no seu espaço de trabalho dá independência e segurança ao manejar a placa. Essas ferramentas incluem alicates de bico fino, cabos jumper e analisadores lógicos.
+
+**Testando Hardware e Software**
+
 Existem três tipos comuns de testes para sistemas embarcados: Power-On Self-Test (POST), testes de unidade e testes de inicialização. O POST verifica componentes principais durante a inicialização. Testes de unidade automatizam a verificação de funcionalidades, enquanto testes de inicialização são mais específicos a subsistemas particulares.
 
-Construindo Testes
-Testes de hardware frequentemente são escritos enquanto o esquema está sendo completado. Considere parâmetros como endereços de memória, ponteiros e comprimentos ao criar testes.
+**Construindo Testes**
 
-Exemplo de Teste de Memória Flash
+Testes de hardware frequentemente são escritos enquanto o esquemático está sendo completado. Considere parâmetros como endereços de memória, ponteiros e comprimentos ao criar testes.
+
+**Exemplo de Teste de Memória Flash**
+
 Memória flash, um tipo de memória não volátil, funciona de maneira particular e requer sequências específicas de leitura e escrita para ser testada corretamente:
 
 Exemplos de funções em C:
 
-C
-
-
-Copiar
-1
-2
-3
+```C
 int FlashTest(uint32_t address, uint8_t *memory, uint16_t memLength);
 uint16_t FlashRead(uint32_t addr, uint8_t *data, uint16_t dataLen);
 uint16_t FlashWrite(uint32_t addr, uint8_t *data, uint16_t dataLen);
+```
+
 Teste 1: Ler Dados Existentes
-C
 
-
-Copiar
-1
-2
-3
-4
-5
-6
+```C
 dataLen = FlashRead(startAddress, memory, memLength);
+
 if (dataLen != memLength) {
   Log(LogUnitTest, LogLevelError, "Flash test: truncation on byte read");
   memLength = dataLen;
   error++;
 }
+```
+
 Teste 2: Acesso a Byte
-C
 
-
-Copiar
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
+```C
 FlashEraseSector(startAddress);
 addValue = 0x55;
 for (i = 0; i < memLength; i++) {
@@ -275,61 +268,43 @@ for (i = 0; i < memLength; i++) {
     error++;
   }
 }
+```
+
 Teste 3: Acesso a Bloco
-C
 
-
-Copiar
-1
-2
-3
-4
-5
-6
+```C
 FlashEraseSector(startAddress);
 dataLen = FlashWrite(startAddress, memory, memLength);
 if (dataLen != memLength) {
   LogWithNum(LogUnitTest, LogLevelError, "Flash test: block write error", dataLen);
   error++;
 }
-Conclusão dos Testes
+```
+
+**Conclusão dos Testes**
+
 Se a placa passa nesses testes, a confiança no hardware e software aumenta, satisfazendo a necessidade de testes de inicialização e unidade.
 
-Padrões de Projeto e Testes de Software
+**Padrões de Projeto e Testes de Software**
+
 Usar o padrão de comando facilita implementar testes repetitivos durante a inicialização. Crie comandos como "versão do código", "teste de flash" e "piscar LED" para testar funcionalidades sem recompilar constantemente.
 
-Interface de Comandos
+**Interface de Comandos**
+
 Um exemplo de estrutura de comando em C pode ser:
 
-C
-
-
-Copiar
-1
-2
-3
-4
-5
-6
+```C
 typedef void(*functionPointerType)(void);
 struct commandStruct {
-char const *name;
-functionPointerType execute;
-char const *help;
+  char const *name;
+  functionPointerType execute;
+  char const *help;
 };
+```
+
 Tabela de comandos:
 
-C
-
-
-Copiar
-1
-2
-3
-4
-5
-6
-7
+```C
 const struct commandStruct commands[] = {
   {"ver", CmdVersion, "Display firmware version"},
   {"flashTest", CmdFlashTest, "Runs the flash unit test, prints number of errors upon completion"},
@@ -337,35 +312,137 @@ const struct commandStruct commands[] = {
   {"help", CmdHelp, "Prints out help messages"},
   {"", 0, ""} // End of table indicator. MUST BE LAST!!!
 };
-Manipulação de Erros
+```
+
+**Manipulação de Erros**
+
 Erros devem ser tratados de modo seguro, seja degradando a funcionalidade ou falhando de forma clara e imediata. Funções devem lidar com erros corrigindo valores fora do intervalo e retornando códigos de erro. Uso do assert() e instruções de ponto de quebra (BKPT) ajudam na depuração.
 
 Exemplo de macro BKPT:
 
-C
-
-
-Copiar
-1
+```C
 #define BKPT() __asm__("BKPT")
-Biblioteca de Manipulação de Erros
+```
+
+**Biblioteca de Manipulação de Erros**
+
 Uma biblioteca de erros pode ser útil:
 
-C
-
-
-Copiar
-1
+```C
 void ErrorSet(int *errorCode, int error);
+```
+
 Uso em sequência de chamadas:
 
-C
-
-
-Copiar
-1
+```C
 ErrorSet(&globalErrorCode, FunctionFoo());
-Depuração de Erros de Temporização
+```
+
+**Depuração de Erros de Temporização**
+
 Erros de temporização podem ser difíceis de detectar e depurar devido à alteração da temporização por saídas seriais ou pontos de interrupção. O uso de buffers circulares ajuda a capturar eventos importantes sem prejudicar a temporização.
 
 Com esses conceitos e técnicas, o engajamento com hardware e software em sistemas embarcados torna-se mais eficiente e gerenciável, contribuindo para o desenvolvimento de produtos de alta qualidade e confiança.
+
+## 4. Entradas, Saídas e Temporizadores
+
+Os sistemas embarcados operam principalmente com entradas, saídas e temporizadores. Compreender esses elementos é essencial para o desenvolvimento eficiente de sistemas. Vamos explorar desde um sistema simples de piscar luzes até conceitos mais complexos como debouncing de botões e controle de brilho de LEDs, destacando o papel crucial dos temporizadores.
+
+#### Lidando com Registradores
+
+Para interagir com uma linha de I/O, é necessário manipular registradores. Esses registradores funcionam como a interface de programação de aplicativos (API) do hardware descrita no manual do chip. São mapeados na memória, permitindo a leitura e escrita de endereços específicos para modificar registradores específicos. Como cada bit no registrador representa uma função distinta, a capacidade de manipular números binários e hexadecimais é fundamental. Por exemplo, números hexadecimais são frequentemente usados por serem mais fáceis de visualizar em memória e mais simples para representar múltiplos bits.
+
+**Operações Bit a Bit**
+
+Manipular registradores exige operações bit a bit, como AND, OR, NOT e XOR. Cada operação bit a bit manipula bits específicos, possibilitando testes, configurações, limpezas ou alternâncias de bits de maneira eficiente:
+
+- **AND** ajuda a testar se um bit está definido.
+- **OR** permite definir um bit.
+- **NOT** é usado para limpar um bit.
+- **XOR** alterna o estado de um bit.
+
+Por exemplo, para verificar se um bit específico em um registrador está definido, utilizamos a operação AND bit a bit. Para definir um bit, utilizamos a operação OR, enquanto a operação NOT combinada com AND é usada para limpar um bit específico. A operação XOR pode alternar o estado de um bit, uma funcionalidade útil em diversas aplicações, como gráficos de computador e detecção de overflow em cálculos.
+
+**Operações nos Pinos**
+
+Para fazer um LED piscar, é necessário definir o pino correspondente como saída e ativá-lo. Isso envolve a configuração da direção do pino e, em seguida, definir seu estado alto ou baixo. A alterantiva simples seria configurar o pino:
+
+```c
+*((int*)0x0070C1) |= (1 << 2);
+```
+
+No entanto, a prática recomendada é utilizar bibliotecas e cabeçalhos fornecidos pelo fabricante do processador para abstrair esse mapeamento de memória. Isso facilita a manutenção e a portabilidade do código entre diferentes arquiteturas e versões do hardware.
+
+**Temporizadores e Precisão**
+
+Os temporizadores são contadores que medem o tempo por meio de ticks de clock. Eles operam independentemente do software, permitindo precisões temporais sem sobrecarregar a CPU. A configuração dos temporizadores requer ajustar registradores como contadores, comparadores, prescalers e ações específicas, como interrupções. Configurar um temporizador envolve:
+
+- **Counter register (contador):** Armazena o valor corrente do temporizador.
+- **Compare register:** Define quando uma ação é realizada, como gerar uma interrupção.
+- **Prescaler register:** Ajusta a velocidade do clock.
+- **Control register:** Inicializa e controla o temporizador.
+  
+Um exemplo prático é configurar um temporizador para gerar uma interrupção a cada 0,1 segundos (10 Hz), o que pode ser obtido ajustando o prescaler e o comparador adequados.
+
+**Debouncing de Botões**
+
+Botões físicos podem gerar múltiplos sinais digitais devido a efeitos mecânicos ou elétricos. O debouncing é a técnica usada para eliminar esses sinais espúrios, criando leituras consistentes dos estados dos botões. Isso pode ser feito tanto por hardware quanto por software. Em software, o debouncing envolve a leitura repetida do estado do botão várias vezes em intervalos curtos e só considerar o estado modificado se todas as leituras consecutivas forem consistentes. O objetivo é garantir que a leitura do botão represente uma ação de pressionar ou soltar genuína, não ruídos de contatos.
+
+**Modulação por Largura de Pulso (PWM)**
+
+PWM controla a duração em que um pino permanece alto ou baixo, influenciando o brilho de LEDs ou a velocidade de motores. Utiliza temporizadores e registradores de comparação para ajustar a frequência e o ciclo de trabalho (duty cycle).
+
+**Configuração e Utilização de PWM**
+
+A configuração de PWM envolve definir registradores de comparação para controlar a frequência de chaveamento e a duração do sinal alto ou baixo. Com PWM, o processador pode ajustar a quantidade de energia que um dispositivo (como um LED) recebe ao variar a duração do estado ligado e desligado em um ciclo.
+
+**Configuração de GPIO**
+
+Exemplo:
+
+```c
+typedef struct
+{
+__IO uint32_t CRL; // Configuração do porta (baixo)
+__IO uint32_t CRH; // Configuração do porta (alto)
+__IO uint32_t IDR; // Registrador de dados de entrada
+__IO uint32_t ODR; // Registrador de dados de saída
+__IO uint32_t BSRR; // Registrador de set/reset de bits
+__IO uint32_t BRR; // Registrador de reset de bits
+__IO uint32_t LCKR; // Configuração de lock do porta
+} GPIO_TypeDef;
+```
+
+**Separando o Hardware da Ação**
+
+Modificações em projetos de hardware podem requerer alterações nos pinos utilizados. Para facilitar essas mudanças, é útil abstrair a configuração dos pinos num arquivo de cabeçalho específico do board, evitando hardcoding e mantendo a flexibilidade do código.
+
+```c
+#define LED_SET_DIRECTION (P1DIR)
+#define LED_REGISTER (P1OUT)
+#define LED_BIT (1 << 3)
+```
+
+Essa prática facilita a adaptação a novas versões do hardware sem a necessidade de modificações extensivas no código. Além disso, usar uma camada de abstração (HAL) permite que o código principal seja mais genérico e reutilizável.
+
+**Injeção de Dependência e Padrão Facade**
+
+A injeção de dependência remove a dependência do código de hardware específico, permitindo que as variáveis sejam passadas em tempo de execução. O padrão Facade, por outro lado, esconde detalhes de implementação, proporcionando uma interface simplificada.
+
+Por exemplo, um módulo de LED pode depender de um manipulador de pinos I/O que é passado como parâmetro. Isso torna o código do LED mais genérico e reutilizável em diferentes contextos, sem conhecimento dos pinos específicos que está manipulando.
+
+```c
+typedef struct
+{
+  void (*setPinHigh)();
+  void (*setPinLow)();
+} IO_Handler;
+
+void initLED(IO_Handler* handler) {
+  handler->setPinHigh();
+}
+```
+
+**Conclusão: Otimização e Flexibilidade**
+
+Desenvolver um produto final requer várias iterações e a exclusão de funcionalidades prototípicas. Embora a flexibilidade inicial do código (como injeção de dependência) seja útil, a simplificação e a clareza são essenciais para a manutenção a longo prazo. A experiência e o aprendizado adquiridos durante o desenvolvimento são valiosos, mesmo que partes do código sejam descartadas. Dessa forma, equilibrar flexibilidade e manutenibilidade do código é crucial para o sucesso de sistemas embarcados, garantindo que o produto final seja eficiente, sustentável e adaptável a futuras necessidades.
