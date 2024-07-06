@@ -8,6 +8,8 @@
 
 [3. Communicating](#3-communicating)
 
+[4. Power Systems](#4-power-systems)
+
 ## 1. Essential Concepts
 
 #### Introduction to Electronics
@@ -355,4 +357,72 @@ In summary, designing robust digital communication systems for embedded devices 
 
 The CAN bus stands out for its robustness and efficiency in harsh environments, making it invaluable in automotive and industrial applications where reliable, real-time communication is critical.
 
-## 4. 
+## 4. Power Systems
+
+#### AC Power Safety: Defining the Problem
+
+AC power is a crucial component when it comes to embedded systems. However, it is essential to ensure the safe implementation of AC power in a device to prevent accidents and system failures. AC power carries potential risks such as electric shock and device malfunction if not handled properly.
+
+To ensure AC power safety, it is essential to consider the partitioning between high-voltage (HV) and low-voltage (LV) components. In most countries, power inlets below 50 V are classified as extra low voltage (ELV), simplifying safety requirements. Safety measures for HV components, such as AC/DC converters, are more stringent. One common method to ensure safety is enclosing both the AC/DC converter and the electronic system in a conductive metal enclosure with a safety ground tied back to the AC mains safety ground. This approach is widely used in desktop personal computers.
+
+#### Safe Failure Methods and Overcurrent Protection
+
+Besides operational safety, power systems also require safe failure methods. In the event of a failure, it is crucial to ensure that the system remains safe and protects the user from any potential danger. The concept of single fault safety is employed, where any element in the system can fail in an open or closed circuit state without causing harm.
+
+Overcurrent protection is another vital aspect of power systems. It involves mechanisms to prevent excessive current flow that can lead to components overheating and failure. There are several commonly used methods for overcurrent protection:
+
+1. Fuses: Fuses are simple and cost-effective but have limitations such as slow response time and the need for manual replacement.
+2. Circuit breakers: Circuit breakers offer the convenience of being resettable but come with higher costs and larger size.
+3. Polymeric positive temperature coefficient (PTC) resettable fuses: These devices limit the current by changing from a low-resistance to a high-resistance state when overloaded, providing a self-resetting capability.
+4. Active circuit protection: These systems use detection circuits to monitor current and voltage and activate suitable controls to limit or shut down the power when necessary. They offer faster response times and accuracy but come with increased complexity and cost.
+
+Regardless of the overcurrent protection method used, it is crucial to ensure that the protection device is the weakest link in the system. Proper design considers factors such as the maximum sustained and startup surge currents when setting the trip protection point.
+
+#### AC/DC Conversion
+
+While many electronic devices operate on direct current (DC) power, they often require AC power conversion. This conversion is typically performed by AC/DC converters. There are different approaches to AC/DC conversion, each with its advantages and disadvantages.
+
+One classic approach is the use of transformers operating at the AC mains frequency, typically 60 Hz or 50 Hz. This method involves stepping down the AC voltage, rectifying it through a diode bridge, and filtering it to obtain a DC output. However, transformers operating at low frequencies like 60 Hz tend to be bulky and heavy. Higher frequencies, such as 400 Hz used in the aviation industry, allow for smaller and lighter transformers.
+
+An alternative to transformers is off-line switchers, which use a switched-mode conversion method. These converters rectify the AC line voltage and rapidly switch it across the primary of a transformer at a much higher frequency, such as 10 KHz to 1 MHz. This approach offers advantages such as smaller transformers and output filter capacitors. Off-line switchers have become the preferred choice in consumer electronics due to their efficiency, compact size, and cost-effectiveness.
+
+#### Multi-PCB Systems: Local Power Regulation
+
+In multi-PCB systems, it is crucial to address the impedance and voltage variance in power and ground connections caused by dynamic current loads. To minimize these effects, local power regulation is necessary.
+
+Many industrial systems distribute raw DC power at different voltages depending on the requirements of satellite PCBs. However, using a DC voltage directly from the PCB without local regulation can lead to inconsistencies, noise issues, and failure during regulatory testing. Therefore, it is advisable to regulate the power supply on the same PCB where it is utilized to maintain consistent and noise-free power.
+
+#### DC/DC Conversion: Linear vs. Switching
+
+Power regulators can be classified into linear regulators and switching regulators, each using different methods to provide a consistent voltage output.
+
+Linear regulators use adaptive voltage division to regulate the output voltage. However, this method is inefficient since it dissipates energy inside the regulator, resulting in power inefficiency and potential thermal failures. Linear regulators are known for their low noise output but may not be suitable for large input-to-output voltage drops.
+
+Switching regulators, on the other hand, use varying duty cycles to regulate the output voltage. They switch the input voltage at a high frequency and rely on control feedback systems to determine the on/off time of the switch. Switching regulators are highly efficient and compact, making them suitable for various applications. They include buck converters (reducing voltage), boost converters (increasing voltage), and buck-boost converters (raising or lowering voltage). The choice between linear and switching regulators depends on factors such as power efficiency, voltage requirements, and noise considerations.
+
+#### Picking Regulators and Configuring a Power System
+
+When configuring a power system, it is crucial to consider the requirements of different components and select appropriate regulators accordingly. Let's take a couple of examples to illustrate this process.
+
+Example 1:
+- A device with a 12 V motor driver system, a logic block operating at 2.5 V, a host microcontroller (MCU) requiring 3.3 V, and analog circuitry needing 5 V.
+- An off-line switcher can be used for AC/DC conversion to directly power the motor driver.
+- Buck converters can provide the 2.5 V and 3.3 V power supplies for the logic block and MCU, respectively.
+- The MCU acts as the central control, managing the power supplies and enabling selective shutdown of peripheral devices for energy efficiency and safe system behavior.
+
+Example 2:
+- A power system with a battery pack consisting of four lithium batteries in series (4S) and two in parallel (2P).
+- The system must operate at both 18 V (battery charging) and 10 V (fully discharged batteries).
+- A buck-boost converter can be used to provide a consistent 12 V output for a circuit that requires that voltage, switching between buck and boost modes as needed.
+- Other power requirements, such as a logic block at 0.9 V or an MCU at 3.3 V, can be fulfilled using appropriate buck converters.
+- Filtering and noise considerations should be taken into account to ensure stable power supply voltages in noise-sensitive circuitry.
+
+Power supply monitoring is an important feature to consider, allowing the monitoring of voltages at different points in the system. By using voltage dividers and analog-to-digital converters (ADCs), one can monitor power sources and facilitate proper power on/off sequences.
+
+Bypass capacitors, decoupling, and filtering play a crucial role in power systems. At-chip bypass capacitors directly connected to power pins, distributed capacitance across the power plane, and filtering at voltage regulator outputs all contribute to stable and noise-free power delivery. The selection of bypass capacitor values and their distribution should consider the high-frequency response, resonance points, and impedance characteristics of the capacitors used.
+
+Finally, it is important to ensure low-impedance power and ground connections to minimize voltage variances caused by wideband surge currents generated by digital logic. Dedicated power and ground layers within the PCB, combined with distributed bypass capacitance, help stabilize the power grid and reduce the impact of impedance fluctuations.
+
+In summary, developing hardware for embedded systems involves careful consideration of power systems. This includes addressing AC power safety, implementing safe failure methods, selecting appropriate overcurrent protection methods, and choosing suitable AC/DC converters and DC/DC regulators. Additionally, configuring a power system requires careful regulator selection, consideration of power supply monitoring, and the incorporation of bypass capacitors and stable power and ground connections to ensure reliable and noise-free operation.
+
+## 5. 
