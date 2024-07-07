@@ -14,6 +14,8 @@ Este conteúdo aborda métodos de design eletrônico aplicados a dispositivos do
 
 [5. Energia da Bateria](#5-energia-da-bateria)
 
+[6. EMI e ESD](#6-emi-e-esd)
+
 
 ## 1. Conceitos Essenciais
 
@@ -527,4 +529,86 @@ O design de sistemas de bateria para eletrônicos embarcados envolve uma conside
 
 A tecnologia de bateria está em constante evolução e, embora existam alternativas, as baterias tradicionais permanecem como a solução primária de armazenamento de energia em sistemas eletrônicos pequenos. Garantir a segurança e a conformidade regulatória, ao mesmo tempo em que se mantém atualizado com os avanços tecnológicos, é essencial para o sucesso do desenvolvimento de hardware.
 
-## 6.
+## 6. EMI e ESD
+
+O mundo do hardware embarcado envolve lidar com várias formas de ruído eletrônico que podem interferir no funcionamento adequado dos dispositivos. Dois tipos significativos de interferência são a Interferência Eletromagnética (EMI) e a Descarga Eletrostática (ESD). Ambos são considerações cruciais no design e desenvolvimento de sistemas de hardware robustos e confiáveis.
+
+#### EMI Interna e Externa
+
+Qualquer sistema eletrônico digital gera intrinsecamente EMI. Esse ruído é influenciado pelas taxas de relógio, número de portas ativas e outros dispositivos de comutação. Externamente, inúmeras fontes como dispositivos de rádio, ruído solar, redes elétricas e eletrônicos podem introduzir ruído. Internamente, o ruído dentro de um sistema pode degradar o desempenho, reduzir a precisão ou até tornar um dispositivo não funcional.
+
+### Importância do Controle de EMI
+
+Para garantir o desempenho ideal e a conformidade regulatória dos dispositivos eletrônicos, os designers precisam minimizar a EMI gerada por seus produtos e protegê-los do ruído ambiental.
+
+#### EMI Radiada
+
+Refere-se ao ruído emitido que pode afetar outros dispositivos fora do sistema. Se a EMI radiada de um sistema exceder os níveis permitidos, pode perturbar eletrônicos próximos.
+
+#### EMI Conduzida
+
+Trata-se do ruído que é injetado nas linhas de energia CA pelo sistema. Essas correntes transientes ou picos de alta frequência de tensão podem causar interrupções se não forem controladas.
+
+#### Aspectos Regulatórios
+
+Diversas indústrias têm padrões específicos de conformidade para EMI, como os setores médico, aeroespacial e militar. Esses padrões garantem que os dispositivos funcionem de maneira confiável sem causar interferências excessivas.
+
+#### Ruído Intrínseco na Eletrônica
+
+Nem todo o ruído na eletrônica vem da EMI. Algumas fontes de ruído são intrínsecas aos próprios componentes do sistema. Isso inclui:
+
+- **Ruído de Cintilação (Ruído 1/F):** Originário de transistores CMOS.
+- **Ruído Térmico:** Devido às atividades térmicas em resistores.
+- **Ruído de Torneira e Ruído de Rajada:** Decorrente de transições de carga discretas dentro de condutores e semicondutores.
+
+#### Técnicas de Design e Aterramento
+
+Limitar o ruído em um sistema envolve aterramento adequado, caixas de blindagem e proteção de portas. Técnicas como gaiolas de Faraday podem conter o ruído e atender às restrições regulamentares de maneira eficiente.
+
+#### Requisitos Regulatórios e Testes
+
+Os dispositivos devem passar por testes regulatórios para garantir que operem abaixo dos limites de ruído estabelecidos. Isso geralmente envolve medir emissões radiadas com antenas calibradas e analisadores de espectro.
+
+#### Análise no Domínio da Frequência
+
+Identificar fontes de ruído é melhor feito usando análise no domínio da frequência. Isso envolve observar espectros de sinal para encontrar múltiplos harmônicos e outros padrões de ruído. Entender essas frequências pode ajudar a identificar e mitigar as origens do ruído.
+
+#### Relógios Mais Lentos e Transições Mais Suaves
+
+Reduzir as velocidades de transição de sinais digitais pode diminuir significativamente a EMI. Isso pode ser conseguido ajustando as forças dos drivers ou usando relógios mais lentos.
+
+#### Técnicas de Espectro Espalhado
+
+Isso envolve variar ligeiramente o período do relógio para espalhar a energia espectral ao longo de uma faixa, reduzindo a EMI pico.
+
+#### Blindagem e Resistores para SMPS
+
+Fontes de alimentação comutadas (SMPS) podem ser fontes de ruído. Adicionar resistores RC e usar gaiolas de Faraday pode mitigar isso.
+
+#### Estratégias de Interconexão de Cabos
+
+O ruído conduzido pode viajar por cabos. Usar pares trançados ou núcleos de ferrite reduz isso. Para controles de motor, colocar diodos de retorno diretamente no motor ajuda a reduzir o ruído nos cabos de controle.
+
+#### Acoplamento Capacitivo e Magnético
+
+O ruído pode ser transferido através de capacitância ou indução magnética entre componentes. Espaçar cuidadosamente as conexões e usar sinais diferenciais ajuda a mitigar isso.
+
+#### Estabelecendo um Aterramento de Baixa Impedância
+
+Criar uma rede de aterramento de baixa impedância é crucial. Serve como um caminho de retorno de corrente estável, reduzindo a interferência de ruído. Várias configurações, como múltiplos pontos de aterramento e folhas condutoras sólidas, podem aprimorar isso.
+
+#### Identificando Componentes Ruidosos e Sensíveis
+
+O planejamento de placas envolve separar componentes ruidosos dos sensíveis na PCB. Circuitos analógicos e de sinal misto não devem compartilhar fontes de alimentação com componentes digitais para minimizar a transferência de ruído.
+
+#### Contenção e Proteção
+
+As gaiolas de Faraday efetivamente contêm e protegem sistemas tanto da EMI interna quanto externa. Elas podem ser usadas para blindar sistemas inteiros ou componentes sensíveis selecionados.
+
+#### Entendendo Eventos de ESD
+
+A ESD pode causar danos significativos aos circuitos. Proteger contra a ESD envolve projetar circuitos para tolerar e sobreviver a surtos de tensão. Diodos TVS são comumente usados para limitar esses surtos.
+
+#### Resumo e Melhores Práticas
+
+O gerenciamento eficaz de EMI e ESD envolve reconhecer fontes de ruído, aterramento adequado e técnicas de blindagem. Relógios mais lentos e transições de sinal mais suaves reduzem o ruído, e o planejamento de placas ajuda a isolar componentes sensíveis. Seguir esses princípios garante o desenvolvimento de sistemas embarcados robustos e confiáveis.
