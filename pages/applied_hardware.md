@@ -425,4 +425,102 @@ Finally, it is important to ensure low-impedance power and ground connections to
 
 In summary, developing hardware for embedded systems involves careful consideration of power systems. This includes addressing AC power safety, implementing safe failure methods, selecting appropriate overcurrent protection methods, and choosing suitable AC/DC converters and DC/DC regulators. Additionally, configuring a power system requires careful regulator selection, consideration of power supply monitoring, and the incorporation of bypass capacitors and stable power and ground connections to ensure reliable and noise-free operation.
 
-## 5. 
+## 5. Battery Power
+
+
+Modern electronics relies heavily on battery power, from mobile phones to portable tools. Devices today are mostly untethered, with AC power primarily used for charging batteries. This chapter focuses on designing efficient battery systems that meet the needs of various electronic systems.
+
+#### Key Components of a Battery
+
+A single-cell battery comprises three main parts:
+
+- **Anode:** The negative terminal that emits electrons when the battery is connected to a circuit.
+- **Cathode:** The positive terminal that absorbs electrons during circuit operation.
+- **Electrolyte:** A medium facilitating ion movement between the anode and cathode, enabling electron flow in the external circuit while maintaining separation through a nonconductive carrier called a separator.
+
+### Decision Making: Single-Use vs. Rechargeable Batteries
+
+#### Price Considerations
+
+Rechargeable systems are costlier due to additional electronics like AC/DC sources and the batteries themselves. Conversely, single-use batteries offer a low-cost solution, suitable for low-power devices such as remote controls and wall clocks.
+
+#### Use Cases and Applications
+
+- **Low-Power Usage:** Ideal for single-use batteries typically found in low-power devices.
+- **High Power Consumption:** Rechargeable batteries with swappable packs suit high-power applications like power tools.
+- **Power Outage Systems:** Rechargeable batteries are preferred for devices needing to function during power outages, such as UPS systems and emergency lights.
+
+#### Defining Power Requirements
+
+Electronics vary widely in power consumption. Supercomputers demand megawatts, whereas electronic watches require microwatts. Thus, understanding a system's power use, including peak currents, long-term average currents (LTAC), and voltage ranges, is crucial for suitable battery selection.
+
+#### Battery Discharge and Voltage Range
+
+Battery voltage decreases non-linearly as it discharges. Systems should ideally operate over the entire battery discharge range. Options include using boost circuits, low-dropout (LDO) regulators, or series-connected batteries to maintain operational voltage.
+
+#### Battery Types and Chemistry
+
+Battery types are categorized by their chemical make-up and packaging characteristics. It's important to choose the right battery chemistry to match the application needs.
+
+##### Discharge Characteristics
+
+Understanding battery behavior under different loads is critical. Manufacturers often provide ampere-hour (Ah) ratings at low discharge currents to present higher capacity figures. However, higher actual load currents reduce the effective capacity, necessitating detailed capacity testing.
+
+### Chemistry Selection
+
+Three primary rechargeable battery types include:
+
+- **Sealed Lead Acid (SLA)**
+- **Nickel Metal Hydride (NiMH)**
+- **Lithium-Ion (Li-ion) Family**
+
+Design considerations cover average and peak currents, usage time, voltage requirements, environmental temperatures, capacity changes over time, safety circuits, and charge balancing.
+
+### Charging Methods
+
+#### Chemistry-Specific Charging
+
+Each battery chemistry requires a unique charging method. Integrated circuits (ICs) help control the process, with parameters adjustable via digital or external components. Multiple ICs cater to different chemistries like Li-ion, lead-acid, and NiMH.
+
+#### Smart Batteries
+
+Smart batteries integrate features beyond basic cells, including charge balancing and monitoring systems. They utilize interfaces like I2C/SMB for communication, although a future shift to CAN bus is expected. These batteries still require external chargers tailored to their specific configurations.
+
+#### Safety and Regulations
+
+Shipping and selling products with Li-ion batteries entail extensive testing and certifications. High compliance costs may prompt manufacturers to use pre-certified battery packs. Ensuring designed enclosures allow for battery expansion helps prevent issues like those seen in infamous battery fires.
+
+### Alternative Energy Storage Methods
+
+#### Supercapacitors
+
+While supercapacitors are often touted as battery replacements, cost and technological limitations hinder widespread adoption.
+
+#### Hydrogen Fuel Cells
+
+These cells generate electricity through a chemical reaction between hydrogen and oxygen, typically used for larger-scale applications.
+
+#### Flow Batteries
+
+Flow batteries use fluid electrolytes in a pump system, suitable for large installations rather than small electronics.
+
+#### Wireless Power
+
+Wireless power is divided into close-proximity charging, energy transmission over distances, and systems without batteries. While close proximity charging is common in smartphones, large-scale applications face cost and efficiency barriers.
+
+#### Solid State Batteries
+
+Solid state batteries promise improved energy density, but practical challenges like production scaling and cost competitiveness remain.
+
+#### Summary and Conclusions
+
+Designing battery systems for embedded electronics involves careful consideration of:
+
+- Inconsistent battery specifications and vendor-provided data.
+- Cost, usage frequency, and application environment when choosing between single-use and rechargeable batteries.
+- System's power needs estimated through LTAC.
+- Matching discharge profiles with system requirements for optimal battery use.
+
+Battery technology is continually evolving, and while alternatives exist, traditional batteries remain the primary energy storage solution in small electronic systems. Ensuring safety and regulatory compliance whilst keeping abreast of technological advancements is essential for successful hardware development.
+
+## 6.
