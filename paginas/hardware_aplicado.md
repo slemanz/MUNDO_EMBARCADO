@@ -16,6 +16,8 @@ Este conteúdo aborda métodos de design eletrônico aplicados a dispositivos do
 
 [6. EMI e ESD](#6-emi-e-esd)
 
+[7. ADCs e DACs](#7-adcs-e-dacs)
+
 
 ## 1. Conceitos Essenciais
 
@@ -612,3 +614,67 @@ A ESD pode causar danos significativos aos circuitos. Proteger contra a ESD envo
 #### Resumo e Melhores Práticas
 
 O gerenciamento eficaz de EMI e ESD envolve reconhecer fontes de ruído, aterramento adequado e técnicas de blindagem. Relógios mais lentos e transições de sinal mais suaves reduzem o ruído, e o planejamento de placas ajuda a isolar componentes sensíveis. Seguir esses princípios garante o desenvolvimento de sistemas embarcados robustos e confiáveis.
+
+## 7. ADCs e DACs
+
+Em sistemas eletrônicos, conversores de dados fazem a ponte entre controles digitais e dispositivos periféricos não digitais. A conversão de sinais analógicos para dados digitais é crucial para a eletrônica moderna, especialmente no domínio dos sistemas embarcados. Esses sistemas requerem conversores digital-para-analógico (DACs) e analógico-para-digital (ADCs) para interface com o mundo externo, permitindo processamento e controle de sinal digital.
+
+#### Tipos de DACs
+
+Os DACs são essenciais na conversão de sinais digitais em analógicos. Existem dois tipos principais:
+- **DACs de Taxa Nyquist:** Atualizam sua saída uma vez por ciclo de clock.
+- **DACs de Densidade de Pulso:** Precisam de múltiplos ciclos de clock para atingir uma saída estável, utilizando métodos como modulação por largura de pulso (PWM) e delta-sigma ($\Delta \Sigma$).
+
+#### Saídas de DAC
+
+Os DACs podem ter diferentes tipos de saídas:
+1. **Saída de Tensão, Referenciada ao Terra:** Esta é a forma mais simples e comum, produzindo uma tensão de saída entre o pino de saída e o terra. No entanto, pode ser ruidosa.
+2. **Saída de Tensão, Sinais Diferenciais:** Aqui, duas saídas de tensão definem o sinal como a diferença entre elas. Esta configuração oferece melhor imunidade ao ruído e uma maior razão sinal-ruído.
+3. **Saída de Corrente, Sinais Diferenciais:** Esses DACs fornecem velocidades de conversão rápidas e são tipicamente usados com linhas de transmissão diferenciais.
+
+#### Características do DAC
+
+DACs ideais deveriam produzir uma saída suave, em forma de escada, quando carregados com códigos digitais. A resolução de um DAC, variando de 6 a 32 bits, influencia seu desempenho e velocidade de conversão. Características não ideais como offset DC, erros de ganho, não linearidade integral (INL) e não linearidade diferencial (DNL) podem afetar a saída.
+
+#### Características do ADC
+
+Os ADCs convertem sinais analógicos em dados digitais. Eles compartilham critérios de desempenho semelhantes aos dos DACs, como erros de offset, erros de ganho, INL e DNL. A calibração nos sinais de entrada mínimo e máximo pode compensar esses erros.
+
+#### Entradas e Taxas de Amostragem de ADC
+
+A maioria dos ADCs possui entradas diferenciais, e ao lidar com entradas referenciadas ao terra, uma entrada é conectada ao terra. Os ADCs possuem diversas resoluções (4 a 32 bits) e taxas de amostragem (até 16 G amostras/seg). O erro de quantização é inerente a todos os ADCs e depende da resolução. A taxa de amostragem deve ser pelo menos o dobro da maior frequência do sinal de entrada (taxa de Nyquist) para evitar aliasing.
+
+#### Ruído e Erros
+
+Os ADCs são propensos a erros de quantização, abertura e ruído, especialmente com sinais de alta velocidade. A relação entre a taxa de amostragem e o conteúdo de frequência do sinal é crítica para evitar problemas como aliasing.
+
+#### Tipos de Filtros
+
+Para mitigar o aliasing, filtros analógicos como redes RC Passivas, Op-amp (girador) e LC Passivas são usados. Esses filtros ajudam a reduzir o conteúdo de alta frequência antes que o sinal alcance o ADC. Filtros antialiasing integrados também existem para sistemas mais complexos.
+
+#### Projeto de Filtros
+
+Para a maioria das aplicações, um simples filtro passa-baixa (LPF) RC é suficiente. Filtros mais complexos como filtros de três e sete polos podem ser implementados conforme necessário, usando ferramentas como EDA para o design.
+
+#### Conceito e Implementação
+
+Os DACs PWM são populares em sistemas embarcados devido ao seu custo-benefício e simplicidade. Um padrão de controle com um ciclo de trabalho definido digitalmente é alimentado em um LPF, criando uma tensão analógica.
+
+#### Problemas de Desempenho
+
+O principal problema com DACs PWM é a ondulação de saída. Resoluções mais altas e clocks mais rápidos podem ajudar a minimizar a ondulação. Técnicas como o uso de padrões mais curtos e frequências de clock mais altas também podem melhorar o desempenho.
+
+#### Técnicas Avançadas
+
+Combinar sinais PWM com correntes ponderadas ou inversores lógicos pode reduzir ainda mais a ondulação. Filtros de ordem superior ou DACs integrados podem ser necessários para necessidades de alta resolução.
+
+#### Método DDS
+
+Os DACs podem criar formas de onda arbitrárias através da Síntese Digital Direta (DDS). Isso envolve o uso de um clock para incrementar um contador, que endereça uma tabela de consulta digital com dados de amplitude para uma forma de onda amostrada. O DAC então gera a forma de onda desejada.
+
+#### Resumo e Conclusões
+
+Conversores de dados são vitais para sistemas embarcados, conectando controles digitais com o mundo não digital. Os ADCs e DACs devem operar mais rápido que o dobro da maior frequência do sinal de entrada para evitar aliasing. Filtros simples podem prevenir aliasing, e DACs PWM podem ser implementados facilmente com um design cuidadoso para minimizar a ondulação. Técnicas e ferramentas avançadas podem otimizar o desempenho, garantindo uma conversão de sinal de alta qualidade.
+
+
+## 8.
