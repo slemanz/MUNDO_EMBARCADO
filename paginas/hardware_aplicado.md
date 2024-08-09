@@ -18,6 +18,8 @@ Este conteúdo aborda métodos de design eletrônico aplicados a dispositivos do
 
 [7. ADCs e DACs](#7-adcs-e-dacs)
 
+[8. Periféricos](#8-periféricos)
+
 
 ## 1. Conceitos Essenciais
 
@@ -677,4 +679,96 @@ Os DACs podem criar formas de onda arbitrárias através da Síntese Digital Dir
 Conversores de dados são vitais para sistemas embarcados, conectando controles digitais com o mundo não digital. Os ADCs e DACs devem operar mais rápido que o dobro da maior frequência do sinal de entrada para evitar aliasing. Filtros simples podem prevenir aliasing, e DACs PWM podem ser implementados facilmente com um design cuidadoso para minimizar a ondulação. Técnicas e ferramentas avançadas podem otimizar o desempenho, garantindo uma conversão de sinal de alta qualidade.
 
 
-## 8.
+## 8. Periféricos
+
+Sistemas embarcados desempenham um papel crucial na conexão do mundo digital com o reino analógico. Para interagir efetivamente com dispositivos analógicos, são empregados **circuitos de acionamento e de sensoriamento**. Os circuitos de acionamento, também conhecidos como circuitos driver, fornecem a tensão e a corrente necessárias para operar dispositivos periféricos, enquanto os circuitos de sensoriamento são responsáveis por monitorar e converter informações analógicas em dados digitais que uma unidade de controle digital (UCD) pode processar.
+
+## Compreendendo os Circuitos de Acionamento
+
+### Fundamentos dos Circuitos Driver
+
+Um circuito driver é essencial para controlar dispositivos que requerem mais potência do que a saída de dispositivos digitais típicos pode fornecer. Por exemplo, ao controlar um **motor**, um circuito driver pode ser utilizado para suprir alta potência, enquanto um circuito de sensoriamento pode monitorar a velocidade de rotação desse motor. Os sistemas podem funcionar sem feedback (em malha aberta) ou com feedback (em malha fechada), onde o desempenho é ajustado com base em dados em tempo real.
+
+### Tipos de Chaveamento
+
+Os circuitos de acionamento podem ser categorizados com base em sua metodologia de chaveamento:
+
+- **Chaveamento de Alto Lado**: A chave está posicionada entre a fonte de alimentação e a carga. Essa disposição protege a carga de mudanças indesejadas nas conexões de terra.
+
+- **Chaveamento de Baixo Lado**: Essa configuração coloca a chave entre a carga e a terra, fornecendo uma solução mais simples para o controle de potência.
+
+Cada método requer transistores de potência e pode precisar de circuitos de interface adicionais para operação eficaz.
+
+## Transistores de Potência em Sistemas Embarcados
+
+Os transistores de potência são componentes vitais nos circuitos de acionamento. A escolha dos transistores afeta a eficiência e o desempenho. **Transistores de Efeito de Campo (FETs)**, particularmente **MOSFETs**, são comumente escolhidos por sua versatilidade e disponibilidade. Compreender os vários tipos de transistores de potência é crucial:
+
+- **Carbeto de Silício (SiC)**: Adequado para aplicações de alta tensão e alta corrente, muitas vezes utilizado em conversão de potência, mas menos comum em sistemas embarcados.
+  
+- **Nitreto de Gálio (GaN)**: Conhecido por baixa resistência e utilizado em situações de alta corrente.
+
+- **Transistores Bipolares de Porta Isolada (IGBT)**: Normalmente usados em aplicações de conversão de potência.
+
+- **Transistores Bipolares de Junção (BJT)**: Essenciais em muitas aplicações analógicas, adequados para chaveamento também.
+
+- **Transistores de Efeito de Campo por Junção (JFET)**: Ainda utilizados em algumas aplicações, mas ofuscados pelos MOSFETs.
+
+## Estratégias de Sinal de Acionamento
+
+Existem várias estratégias para circuitos de acionamento, cada uma adequada a diferentes aplicações:
+
+1. **Chaveamento de Dois Estados**: Este método de controle on-off é simples e eficaz para muitos dispositivos.
+
+2. **Controle Linear**: Envolve o uso de um sinal analógico para controlar o dispositivo, muitas vezes exigindo um DAC (Conversor Digital para Analógico) de saída de tensão.
+
+3. **Modulação por Largura de Pulso (PWM)**: Essa técnica controla a velocidade de motores e o brilho de LEDs variando o ciclo on-off. A inércia do motor pode ajudar a filtrar os sinais PWM, enquanto a visão humana percebe mudanças no brilho do LED devido ao PWM. É essencial que o ciclo de trabalho seja ajustado para evitar piscadas.
+
+## Gestão Térmica de Transistores de Potência
+
+Um design eficiente deve considerar o desempenho térmico dos dispositivos de potência. Calor excessivo pode levar a falhas transientes. Aspectos-chave incluem:
+
+- **Resistência Térmica**: Influi na forma como o calor se dissipa do dispositivo para o ambiente.
+
+- **Ciclo de Trabalho**: Quanto maior o ciclo de trabalho, mais calor é gerado, o que pode exigir dissipadores de calor ou outras soluções de resfriamento.
+
+Selecionar um transistor com uma **RDS (resistência dreno-fonte)** apropriada pode mitigar a geração de calor e aprimorar o desempenho.
+
+## Acionando Cargas: LEDs e Dispositivos Indutivos
+
+### Acionando LEDs
+
+Os drivers de baixo lado frequentemente energizam LEDs. É vital entender as curvas de polarização associadas a diferentes cores de LEDs para alcançar o brilho desejado. O **controle PWM** fornece um ajuste eficaz de brilho e normalmente é inferior a 2 kHz para evitar o efeito de piscar.
+
+### Acionando Cargas Indutivas
+
+Cargas indutivas como motores e relés podem gerar tensões transientes destrutivas. Implementar **diodos de flyback** ajuda a gerenciar esses picos de tensão, direcionando a corrente de forma segura quando o circuito é desligado.
+
+### Atuação de Solenoides e Relés
+
+Tanto solenoides quanto relés requerem potência para ativação, e a circuitaria necessária é frequentemente semelhante. É crítico incluir proteção, como diodos de flyback, para evitar danos durante o chaveamento.
+
+## Ponte H e Controle de Motores
+
+Para dispositivos que requerem reversão da direção da corrente, são utilizados **circuitos de ponte H**. Esses circuitos são vitais para controlar motores DC com escovas e sem escovas, permitindo uma operação suave e flexibilidade de direção. A ponte H utiliza pares de transistores para gerenciar fluxo de corrente de forma eficaz.
+
+### Tipos de Motores
+
+- **Motores DC com Escovas**: Simples e econômicos, mas podem gerar ruído elétrico e desgastar-se com o tempo.
+
+- **Motores DC Sem Escovas**: Mais confiáveis devido à comutação eletrônica, úteis em muitas aplicações.
+
+- **Motores de Passo**: Oferecem controle preciso com passos distintos, ideais para tarefas que requerem alta precisão e repetibilidade.
+
+## Considerações de Segurança no Controle de Motores
+
+Ao gerenciar motores, a segurança é primordial. Várias estratégias ajudam a prevenir sobrecargas e falhas mecânicas, incluindo:
+
+- **Sensores de Corrente de Resposta Rápida**: Monitoram a ocorrência de paradas ou atolas.
+
+- **Chaves de Limite**: Desligam circuitos quando os limites mecânicos são alcançados.
+
+- **Dispositivos de Corte de Energia**: Fusíveis ou dispositivos resetáveis protegem contra sobrecorrentes sustentadas.
+
+## Conclusão
+
+O desenvolvimento de hardware para sistemas embarcados envolve uma compreensão profunda de vários componentes e suas interações. A seleção de circuitos de acionamento apropriados, transistores e a gestão do desempenho térmico são críticos para criar sistemas eficazes e eficientes. Com um design cuidadoso, os sistemas embarcados podem alcançar um desempenho confiável em aplicações variadas, desde exibições simples de LEDs até sistemas complexos de controle de motores.
