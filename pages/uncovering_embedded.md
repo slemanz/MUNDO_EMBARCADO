@@ -1,1 +1,0 @@
-# Uncovering Embedded Systems
